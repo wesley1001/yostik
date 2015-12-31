@@ -6,8 +6,8 @@ var {
   TabBarIOS
 } = React;
 
-var Deals = require('./components/Deals');
-// var Search = require('./components/Search');
+var DealsLayout = require('./components/DealsLayout');
+var SearchLayout = require('./components/SearchLayout');
 
 var globals = require('./globals');
 
@@ -35,14 +35,14 @@ class App extends React.Component {
           icon={require('../img/icons/deals.png')}
           selected={(this.state.selectedTab === 'deals')}
           onPress={() => this.setState({selectedTab: 'deals'})}>
-          <Deals />
+          <DealsLayout />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"
           icon={require('../img/icons/search.png')}
           selected={(this.state.selectedTab === 'search')}
           onPress={() => this.setState({selectedTab: 'search'})}>
-          <Deals />
+          <SearchLayout />
         </TabBarIOS.Item>
       </TabBarIOS>
     );

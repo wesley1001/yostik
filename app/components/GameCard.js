@@ -6,7 +6,7 @@ var {
   Text,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
   ListView
 } = React;
 
@@ -45,10 +45,10 @@ var styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 18,
     fontWeight: '500',
-    shadowColor: 'black',
-		shadowOffset: {height: 1, width: 1},
-		shadowOpacity: .7,
-		shadowRadius: 1,
+    // shadowColor: 'black',
+		// shadowOffset: {height: 1, width: 1},
+		// shadowOpacity: .7,
+		// shadowRadius: 1,
   },
   platform: {
     color: '#B6B6B6',
@@ -67,9 +67,9 @@ var styles = StyleSheet.create({
     top: 5,
     backgroundColor: globals.colors.secondary,
     padding: 10,
-    shadowOffset: {height: 0, width: 0},
-		shadowOpacity: .4,
-		shadowRadius: 2,
+    // shadowOffset: {height: 0, width: 0},
+		// shadowOpacity: .4,
+		// shadowRadius: 2,
   },
   discountText: {
     fontSize: 18,
@@ -80,26 +80,41 @@ var styles = StyleSheet.create({
 
 class GameCard extends React.Component {
   render() {
+    var game = this.props.game;
+    var displayPrice;
+    var oldPriceText;
+    var discountBox;
+
+    if(game.discounts.length === 0) {
+      displayPrice = game.displayPrice;
+    } else {
+      displayPrice = game.discounts[0].display_price;
+      oldPriceText = <Text style={[styles.platform, styles.alignRight, styles.oldPrice]}>{game.displayPrice}</Text>;
+      discountBox = (
+        <View style={styles.discountContainer}>
+          <Text style={styles.discountText}>- {game.discounts[0].discount}%</Text>
+        </View>
+      );
+    }
+
     return (
-      <TouchableHighlight onPress={this.props.onSelect}>
+      <TouchableOpacity onPress={this.props.onSelect}>
         <View style={styles.row}>
-          <Image style={styles.image} source={{uri: this.props.game.imageUrl}}>
-            <View style={styles.discountContainer}>
-              <Text style={styles.discountText}>- {this.props.game.discountPercent}%</Text>
-            </View>
+          <Image style={styles.image} source={{uri: game.images[0].url}}>
+            {discountBox}
             <LinearGradient colors={['transparent', '#000']} style={styles.info}>
               <View style={styles.infoLeft}>
-                <Text style={styles.name}>{this.props.game.name}</Text>
-                <Text style={styles.platform}>{this.props.game.platform}</Text>
+                <Text style={styles.name}>{game.name}</Text>
+                <Text style={styles.platform}>{game.platforms[0]}</Text>
               </View>
               <View style={styles.infoRight}>
-                <Text style={[styles.name, styles.alignRight]}>${this.props.game.newPrice}</Text>
-                <Text style={[styles.platform, styles.alignRight, styles.oldPrice]}>${this.props.game.oldPrice}</Text>
+                <Text style={[styles.name, styles.alignRight]}>{displayPrice}</Text>
+                {oldPriceText}
               </View>
             </LinearGradient>
           </Image>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 };

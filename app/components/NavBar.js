@@ -5,7 +5,8 @@ var {
   StyleSheet,
   Navigator,
   TouchableOpacity,
-  Text
+  Text,
+  Image
 } = React;
 
 var globals = require('../globals');
@@ -28,6 +29,9 @@ var styles = StyleSheet.create({
   },
   navBarLeftButton: {
     paddingLeft: 10,
+  },
+  navBarRightButton: {
+    paddingRight: 10,
   }
 });
 
@@ -55,7 +59,19 @@ var NavigationBarRouteMapper = {
       </TouchableOpacity>
     );
   },
-  RightButton() {}
+  RightButton(route, navigator, index, navState) {
+    if(index === 0) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigator.pop()}
+          style={styles.navBarRightButton}>
+          <Image source={{uri: '../../img/icons/filter.png'}} />
+        </TouchableOpacity>
+      );
+    }
+
+    return null;
+  }
 };
 
 module.exports = (

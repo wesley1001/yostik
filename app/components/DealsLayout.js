@@ -8,7 +8,8 @@ var {
 
 var NavBar = require('./NavBar');
 var GamesList = require('./GamesList');
-// var GameScreen = require('./GameScreen');
+var GameDetails = require('./GameDetails');
+var WebView = require('./WebView');
 
 var routes = require('../routes');
 
@@ -19,7 +20,7 @@ var styles = StyleSheet.create({
   }
 });
 
-class Dashboard extends React.Component {
+class DealsLayout extends React.Component {
   render() {
     return (
       <Navigator
@@ -33,11 +34,12 @@ class Dashboard extends React.Component {
   renderScene(route, navigator) {
     if(route.name === 'list') {
       return <GamesList navigator={navigator} />
+    } else if(route.name === 'details') {
+      return <GameDetails navigator={navigator} game={route.gameInfo} />
+    } else if(route.name === 'deal') {
+      return <WebView navigator={navigator} url={route.url} />
     }
-    // } else if(route.name === 'game') {
-    //   return <GameScreen navigator={navigator} />
-    // }
   }
 };
 
-module.exports = Dashboard;
+module.exports = DealsLayout;

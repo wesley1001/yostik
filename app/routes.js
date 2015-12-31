@@ -5,5 +5,9 @@ module.exports = {
   },
   search: {
     search: { name: 'search', title: 'Search' }
+  },
+  details: {
+    details: { name: 'details', title: 'Details' },
+    deal: { name: 'deal', title: 'Get the Deal' }
   }
 };
