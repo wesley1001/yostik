@@ -12,11 +12,13 @@ var {
 var routes = require('../routes');
 
 var Button = require('./Button');
+var GameCompare = require('./GameCompare');
 
 var styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',
-    marginTop: 62
+    marginTop: 62,
+    marginBottom: 44
   },
 
 
@@ -52,6 +54,7 @@ class GameDetails extends React.Component {
             <Text>Rating: TBD</Text>
           </View>
           <Button text="Get the deal" onPress={this.onGetDeal.bind(this)} />
+          <GameCompare navigator={this.props.navigator} game={game} />
         </View>
       </ScrollView>
     )

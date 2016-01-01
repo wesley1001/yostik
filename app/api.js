@@ -8,6 +8,12 @@ let api = {
     query = query.toLowerCase().trim();
     var url = `http://192.168.1.9:8000/search/${query}`;
     return fetch(url).then((res) => res.json());
+  },
+
+  compare(query, cid) {
+    query = query.toLowerCase().trim();
+    var url = `http://192.168.1.9:8000/compare/${query}/${cid}`;
+    return fetch(url).then((res) => res.json());
   }
 }
 
