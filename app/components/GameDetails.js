@@ -6,7 +6,8 @@ var {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  Platform
 } = React;
 
 var routes = require('../routes');
@@ -17,8 +18,8 @@ var GameCompare = require('./GameCompare');
 var styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',
-    marginTop: 62,
-    marginBottom: 44
+    marginTop: (Platform.OS === 'ios') ? 62 : 56,
+    marginBottom: (Platform.OS === 'ios') ? 44 : 0
   },
 
 

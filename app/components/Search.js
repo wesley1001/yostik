@@ -16,7 +16,7 @@ var api = require('../api');
 
 var styles = StyleSheet.create({
   container: {
-    marginTop: 44
+    marginTop: (Platform.OS === 'ios') ? 44 : 56,
   },
   searchBox: {
     height: 40,

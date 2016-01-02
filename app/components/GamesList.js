@@ -3,7 +3,8 @@
 var React = require('react-native');
 var {
   StyleSheet,
-  ListView
+  ListView,
+  Platform
 } = React;
 
 var GameCard = require('./GameCard');
@@ -13,7 +14,7 @@ var api = require('../api');
 
 var styles = StyleSheet.create({
   list: {
-    marginTop: 44
+    marginTop: (Platform.OS === 'ios') ? 44 : 56
   }
 });
 
