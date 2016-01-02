@@ -5,7 +5,8 @@ var {
   StyleSheet,
   ListView,
   ScrollView,
-  TextInput
+  TextInput,
+  Platform
 } = React;
 
 var GameRow = require('./GameRow');
@@ -42,9 +43,21 @@ class Search extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // TODO: Revisit this once the searchbar is on the here in iOS
+    if(this.props.events) {
+      this.props.events.addListener('search', (query) => {
+        this.setState({query});
+        this.onSearch();
+      });
+    }
+  }
+
   render() {
-    return (
-      <ScrollView style={styles.container}>
+    // TODO: Remove Searchbar from here once it's on the header in iOS
+    var searchBar;
+    if(Platform.OS === 'ios') {
+      searchBar = (
         <TextInput
           placeholder="Search..."
           style={styles.searchBox}
@@ -52,6 +65,12 @@ class Search extends React.Component {
           onSubmitEditing={this.onSearch.bind(this)}
           value={this.state.query}
         />
+      );
+    }
+
+    return (
+      <ScrollView style={styles.container}>
+        {searchBar}
         <ListView
           style={styles.list}
           dataSource={this.state.dataSource}

@@ -22,8 +22,7 @@ var styles = StyleSheet.create({
     height: ROW_HEIGHT
   },
   image: {
-    height: ROW_HEIGHT,
-    resizeMode: Image.resizeMode.cover
+    height: ROW_HEIGHT
   },
   info: {
     position: 'absolute',

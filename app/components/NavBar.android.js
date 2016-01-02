@@ -6,10 +6,13 @@ var {
   Navigator,
   TouchableOpacity,
   Text,
-  Image
+  TextInput
 } = React;
 
+var Icon = require('react-native-vector-icons/MaterialIcons');
+
 var globals = require('../globals');
+var routes = require('../routes');
 
 var styles = StyleSheet.create({
   navBar: {
@@ -19,24 +22,44 @@ var styles = StyleSheet.create({
     shadowRadius: 6
   },
   navBarText: {
-    fontSize: 16,
-    marginVertical: 10,
+    fontSize: 20,
+    marginVertical: 14,
   },
   navBarTitleText: {
     color: '#FFF',
-    fontWeight: '500',
-    marginVertical: 9,
+    fontWeight: '500'
   },
   navBarLeftButton: {
     paddingLeft: 10,
+    marginVertical: 14
   },
   navBarRightButton: {
     paddingRight: 10,
+    marginVertical: 14
+  },
+  searchBox: {
+    color: '#FFF'
   }
 });
 
 var NavigationBarRouteMapper = {
   Title(route, navigator, index, navState) {
+    // console.log(navigator);
+    // onChangeText={(query) => navigator.refs.searchScene.setState({query})}
+    // onSubmitEditing={navigator.refs.searchScene.onSearch.bind(navigator.refs.searchScene)}
+    // value={navigator.refs.searchScene.state.query}
+    if(route.name === 'search') {
+      return (
+        <TextInput
+          autoFocus={true}
+          style={styles.searchBox}
+          placeholder="Search games"
+          placeholderTextColor="#EEE"
+          underlineColorAndroid="#EEE"
+          onSubmitEditing={(ev) => navigator.props.events.emit('search', ev.nativeEvent.text)} />
+      );
+    }
+
     return (
       <Text style={[styles.navBarText, styles.navBarTitleText]}>
         {route.title}
@@ -53,19 +76,19 @@ var NavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => navigator.pop()}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarTitleText]}>
-          Back
-        </Text>
+        <Icon name="arrow-back" size={30} color="white" />
       </TouchableOpacity>
     );
   },
   RightButton(route, navigator, index, navState) {
-    if(index === 0) {
+    if (index === 0) {
       return (
         <TouchableOpacity
-          onPress={() => navigator.pop()}
+          onPress={() => {
+            navigator.push(routes.search.search);
+          }}
           style={styles.navBarRightButton}>
-          <Image source={{uri: '../../img/icons/filter.png'}} />
+          <Icon name="search" size={30} color="white" />
         </TouchableOpacity>
       );
     }
