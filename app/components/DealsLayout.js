@@ -35,7 +35,8 @@ class DealsLayout extends React.Component {
         initialRoute={routes.deals.list}
         renderScene={this.renderScene.bind(this)}
         events={this.eventEmitter}
-        navigationBar={NavBar} />
+        navigationBar={NavBar}
+        ref="navigator" />
     );
   }
 

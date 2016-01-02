@@ -3,8 +3,7 @@
 var React = require('react-native');
 var {
   StyleSheet,
-  DrawerLayoutAndroid,
-  View, Text
+  BackAndroid
 } = React;
 
 var DealsLayout = require('./components/DealsLayout');
@@ -26,46 +25,25 @@ class App extends React.Component {
       selectedTab: 'deals'
     }
   }
+
+  componentWillMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this._handleBackButtonPress.bind(this));
+  }
+
   render() {
-    return <DealsLayout />;
+    return <DealsLayout ref="deals" />;
+  }
 
-    // var navigationView = (
-    //   <View style={{flex: 1, backgroundColor: '#fff'}}>
-    //     <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>Im in the Drawer!</Text>
-    //   </View>
-    // );
-    // return (
-    //   <DrawerLayoutAndroid
-    //     drawerWidth={300}
-    //     drawerPosition={DrawerLayoutAndroid.positions.Left}
-    //     renderNavigationView={() => navigationView}>
-    //     <View style={{flex: 1, alignItems: 'center'}}>
-    //       <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>Hello</Text>
-    //       <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>World!</Text>
-    //     </View>
-    //   </DrawerLayoutAndroid>
-    // );
+  _handleBackButtonPress() {
+    var navigator = this.refs.deals.refs.navigator;
+    var routes = navigator.getCurrentRoutes();
 
-    // return (
-    //   <TabBarIOS
-    //     tintColor={globals.colors.primary}
-    //     barTintColor="white">
-    //     <TabBarIOS.Item
-    //       title="Deals"
-    //       icon={require('../img/icons/deals.png')}
-    //       selected={(this.state.selectedTab === 'deals')}
-    //       onPress={() => this.setState({selectedTab: 'deals'})}>
-    //       <DealsLayout />
-    //     </TabBarIOS.Item>
-    //     <TabBarIOS.Item
-    //       title="Search"
-    //       icon={require('../img/icons/search.png')}
-    //       selected={(this.state.selectedTab === 'search')}
-    //       onPress={() => this.setState({selectedTab: 'search'})}>
-    //       <SearchLayout />
-    //     </TabBarIOS.Item>
-    //   </TabBarIOS>
-    // );
+    if(routes[routes.length - 1].name !== 'list') {
+      navigator.pop();
+      return true;
+    }
+
+    return false;
   }
 };
 
