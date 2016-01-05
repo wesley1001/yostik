@@ -8,6 +8,7 @@ var {
 } = React;
 
 var GameCard = require('./GameCard');
+var Spinner = require('./Spinner');
 
 var routes = require('../routes');
 var api = require('../api');
@@ -24,6 +25,7 @@ class GamesList extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
+      loading: true,
       dataSource: ds.cloneWithRows([])
     }
   }
@@ -33,6 +35,10 @@ class GamesList extends React.Component {
   }
 
   render() {
+    if(this.state.loading) {
+      return <Spinner />;
+    }
+
     return (
       <ListView
         style={styles.list}
@@ -58,9 +64,11 @@ class GamesList extends React.Component {
   }
 
   getDeals() {
+    this.setState({loading: true});
     api.deals()
       .then((res) => {
         this.setState({
+          loading: false,
           dataSource: this.state.dataSource.cloneWithRows(res.results)
         });
       });

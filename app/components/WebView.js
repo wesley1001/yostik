@@ -3,15 +3,15 @@ var React = require('react-native');
 var {
   View,
   WebView,
-  StyleSheet
+  StyleSheet,
+  Platform
 } = React;
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
     flexDirection: 'column',
-    marginTop: 60
+    marginTop: (Platform.OS === 'ios') ? 60 : 56
   },
 });
 
@@ -19,7 +19,7 @@ class Web extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <WebView url={this.props.url}/>
+        <WebView url={this.props.url} javaScriptEnabledAndroid={true}/>
       </View>
     );
   }

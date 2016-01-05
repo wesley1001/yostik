@@ -10,6 +10,7 @@ var {
 } = React;
 
 var GameRow = require('./GameRow');
+var Spinner = require('./Spinner');
 
 var routes = require('../routes');
 var api = require('../api');
@@ -39,6 +40,7 @@ class Search extends React.Component {
 
     this.state = {
       query: '',
+      loading: false,
       dataSource: ds.cloneWithRows([])
     };
   }
@@ -56,6 +58,11 @@ class Search extends React.Component {
   render() {
     // TODO: Remove Searchbar from here once it's on the header in iOS
     var searchBar;
+
+    if(this.state.loading) {
+      return <Spinner />;
+    }
+
     if(Platform.OS === 'ios') {
       searchBar = (
         <TextInput
@@ -90,9 +97,11 @@ class Search extends React.Component {
 
   onSearch() {
     var query = this.state.query;
+    this.setState({loading: true});
     api.search(query)
       .then((res) => {
         this.setState({
+          loading: false,
           dataSource: this.state.dataSource.cloneWithRows(res.results)
         });
       });

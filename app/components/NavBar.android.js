@@ -26,8 +26,7 @@ var styles = StyleSheet.create({
     marginVertical: 14,
   },
   navBarTitleText: {
-    color: '#FFF',
-    fontWeight: '500'
+    color: '#FFF'
   },
   navBarLeftButton: {
     paddingLeft: 10,
