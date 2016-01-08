@@ -5,8 +5,11 @@ var {
   StyleSheet,
   Navigator,
   TouchableOpacity,
-  Text
+  Text,
+  Image
 } = React;
+
+var Icon = require('react-native-vector-icons/Ionicons');
 
 var globals = require('../globals');
 
@@ -28,6 +31,9 @@ var styles = StyleSheet.create({
   },
   navBarLeftButton: {
     paddingLeft: 10,
+  },
+  navBarRightButton: {
+    paddingRight: 10,
   }
 });
 
@@ -49,13 +55,23 @@ var NavigationBarRouteMapper = {
       <TouchableOpacity
         onPress={() => navigator.pop()}
         style={styles.navBarLeftButton}>
-        <Text style={[styles.navBarText, styles.navBarTitleText]}>
-          Back
-        </Text>
+        <Icon name="ios-arrow-back" size={30} color="white" />
       </TouchableOpacity>
     );
   },
-  RightButton() {}
+  RightButton(route, navigator, index, navState) {
+    if(index === 0) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigator.pop()}
+          style={styles.navBarRightButton}>
+          <Image source={{uri: '../../img/icons/filter.png'}} />
+        </TouchableOpacity>
+      );
+    }
+
+    return null;
+  }
 };
 
 module.exports = (
